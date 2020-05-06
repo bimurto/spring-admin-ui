@@ -1,0 +1,25 @@
+version: '2'
+services:
+  admin-server:
+    container_name: admin-server
+    build: ./admin-server
+    ports:
+      - '8080:8080'
+    networks:
+      - spring-cloud-network
+
+  admin-client:
+    container_name: admin-client
+    build: ./admin-client
+    ports:
+      - 8091:8091
+    networks:
+      - spring-cloud-network
+    links:
+      - admin-server:admin-server
+    depends_on:
+      - admin-server
+
+networks:
+  spring-cloud-network:
+    driver: bridge
